@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.maptiler.com/maptiler-sdk-js/v1.1.1/maptiler-sdk.umd.js"></script>
+  <link href="https://cdn.maptiler.com/maptiler-sdk-js/v1.1.1/maptiler-sdk.css" rel="stylesheet">
+  <script src="https://cdn.maptiler.com/leaflet-maptilersdk/v1.0.0/leaflet-maptilersdk.js"></script>  
+  <link rel="icon" href="src/LU.Cator.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<style>
+  html{
+  background-color:green
+}
+
+/*!SIDEBAR!*/
+.sidebar {
+  height: 100%;
+  width: 0;
+  z-index: 5 !important;
+  top: 0;
+  right: 0; /* Move the sidebar to the right */
+  background-color: white;
+  opacity: 90%;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  border-top-left-radius: 15px; /* Adjust the border radius accordingly */
+  border-bottom-left-radius: 15px; /* Adjust the border radius accordingly */
+  font-family: 'Trebuchet MS';
+  font-weight: bold;
+  position: fixed;
+  max-height: 90vh;
+}
+
+  /*?SIDEBAR LOOB?*/
+.sidebar a {
+  padding: 8px 32px 8px 20px; 
+  text-decoration: none;
+  font-size: 25px;
+  color: #000000;
+  display: block;
+  transition: 0.2s;
+}
+
+/* On mouse-over, add a grey background color */
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+/* Style the main content */
+#main {
+  transition: margin-right 0.5s; /* Change margin-left to margin-right */
+  padding: 0;
+}
+
+/* Style the hamburger button */
+.hamburger {
+  font-size: 15px;
+  cursor: pointer;
+  background-color: green;
+  color: white;
+  padding: 5px 10px !important;
+  border: none;
+  border-radius: 15px !important;
+  position: sticky;
+  top: 10px !important;
+  right: 0; 
+  margin-left: 0;
+  border: 2px solid white;
+  z-index: 3 !important;
+  position: absolute;
+}
+
+.hamburger:hover {
+  background-color: darkgreen;
+}
+
+#mySidebar {
+  z-index: 2;
+  position: fixed !important;
+}
+/*? MAP ?*/
+#map {
+  position: absolute !important;
+  margin: 0 !important;
+  left: 0;
+  width: 100% !important;
+  height: 100%;
+  margin-top: 0;
+  z-index: 1;
+  top: 0;
+  background-color: rgb(250, 250, 250);
+}
+
+/*? ABOUT ?*/
+/*Socials */
+footer{
+    background-color: green !important;
+    font-size: 100%;
+}
+.footerContainer{
+    width: 100%;
+    padding: 30px 20px 10px;
+}
+.socialIcons{
+    display: flex;
+    justify-content: center;
+    position: inherit;
+}
+.socialIcons a{
+    text-decoration: none;
+    padding: 10px;
+    background-color: white;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.socialIcons a i{
+    font-size: 2em;
+    color: green;
+    opacity: 0.9;
+}
+
+/* Hover Effects on social media icons */
+.socialIcons a:hover{ 
+     background-color: greenyellow;
+     transition: 0.5s;
+}
+
+.socialIcons a:hover i{
+    color: white;
+    transform: 0.5s;
+}
+
+/**Footer**/
+body {
+  background-color: green;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Add this style to the footer to make it sticky at the bottom */
+footer {
+  background-color: green !important;
+  margin-top: auto;
+}
+
+.footerContainer {
+  width: auto;
+  height: 5px;
+  padding: 30px 20px 10px;
+  z-index: -2;
+
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: center;
+}
+
+.socialIcons a {
+  display: inline-block;
+  text-decoration: none;
+  padding-top: 20px;
+  background-color: rgba(0, 128, 0, 0);
+  border-radius: 50%;
+}
+
+.socialIcons a i {
+  font-size: 2em;
+  color: rgb(255, 255, 255);
+  opacity: 0.9;
+}
+
+/* Hover Effects on social media icons */
+.socialIcons a:hover { 
+  background-color: rgb(172, 255, 47);
+  transition: 0.5s;
+}
+
+.socialIcons a:hover i {
+  color: white;
+  transform: 0.5s;
+}
+
+.footerNav {
+  position: inherit;
+  margin: 10px 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  height: 0.1px;
+  font-size: 100%;
+  display: flex; /* Use flexbox for centering */
+  justify-content: center;
+  align-items: center; /* Vertically center items */
+  margin-top: auto;
+}
+
+.footerNav ul {
+  list-style-type: none;
+  padding: 0; /* Remove default padding */
+  text-align: center;
+}
+
+.footerNav ul li {
+  display: inline-block;
+  position: relative;
+}
+
+.footerNav ul li a {
+  color: white;
+  margin: 20px;
+  text-decoration: none;
+  font-size: 100%;
+  opacity: 0.7;
+  transition: 0.5s;
+}
+
+.footerNav ul li a:hover {
+  opacity: 1;
+}
+
+.home{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial;
+  height: 0.1px;
+  font-size: 20px;
+
+}
+
+/*! Search Bar */
+
+.container {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: bold;
+  text-align: center !important;
+  position: relative !important;
+  justify-content: center !important;
+  align-items: center;
+  max-width: 100%;
+  margin: 0 auto;
+  max-height: 150px;
+  z-index: 2;
+}
+
+#logo {
+  height: auto;
+  width: 2rem;
+  position: static;
+}
+
+#sg {
+  opacity: 0.7; /* Use a value between 0 and 1 for opacity */
+}
+
+#cator {
+  font-size: 75%;
+  color: black;
+  text-shadow: white 3px 3px 3px;
+}
+
+#ulo {
+  top: 0;
+  margin-bottom: 10px;
+  font-size: 200%;
+  font-weight: bolder;
+  color: rgb(255, 255, 255);
+  text-shadow: gold 5px 3px 3px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+#output {
+  height: 1rem;
+  resize: none;
+  margin: 0px;
+  width: auto;
+  max-width: 300px;
+  border-radius: 10px;
+  padding-right: 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 5px;
+  font-weight: 550;
+}
+
+#strbtn {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  border-radius: 10px;
+  height: 30px;
+  z-index: 1;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+#srchbtn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  background-color: transparent;
+  border: none;
+  z-index: 1;
+  cursor: pointer;
+}
+
+#srchbtn:hover, #strbtn:hover {
+  color: rgb(69, 75, 69);
+}
+
+#srchbtn:active, #strbtn:active {
+  color: green;
+}
+
+/* Media Query for Responsive Container */
+@media (max-width: 768px) {
+  .container {
+    max-height: 100%;
+  }
+}
+
+
+
+</style>
+<body>
+  
+  <!--*Header-->
+  <div class="container">
+    <h1 id="ulo">
+      <img id="logo" src="src/LU.Cator.png">LU<span id="cator"> CATOR</span>
+    </h1>
+    <div class="search-container">
+      <div id="sg">
+        <div class="search-bar">
+          <button id="strbtn"><i class="fas fa-microphone"></i></button>
+          <input type="text" id="output" placeholder="Search...."></input>
+          <button id="srchbtn"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>  
+<script src="assets/javascript/voicesearch.js"></script>
+
+<!--TODO SIDEBAR-->
+<div id="mySidebar" class="sidebar">
+  <a href="#socials">About</a>
+  <a href="#">New Building</a>
+  <a href="#">Oreta Building</a>
+  <a href="#">Canteen</a>
+  
+</div>
+<div id="main">
+  <button class="hamburger" onclick="toggleNav()">&#9776;</button> 
+
+</div>
+<script src="assets/javascript/sidebar.js"></script>
+
+<!--!MAP-->
+<div id="map">
+</div>
+
+<div id="text-marker" class="text-marker">Your Text Here</div>
+
+<script src="assets/javascript/search.js"></script>
+<script>
+
+  const key = 'w8QTstofKOVCXZdlVo4J';
+  const map = L.map('map', {
+    zoomControl:true,
+    minZoom:16.3,
+    maxZoom:22,
+    zoomControl:true,
+  }).setView([14.2557, 121.4064], 18);
+  document.addEventListener("DOMContentLoaded", function () {
+    
+      const mtLayer = L.maptilerLayer({
+            apiKey: key,
+            style:'https://api.maptiler.com/maps/87441f24-315c-4fbe-a736-38391c707901/style.json?key=w8QTstofKOVCXZdlVo4J',
+          }).addTo(map);
+ 
+          var zoomInButton = document.createElement('button');
+          zoomInButton.id = 'zoom-in-button';
+          zoomInButton.textContent = '+';
+          zoomInButton.addEventListener('click', zoomIn);
+          zoomInButton.style.position = 'absolute';
+          zoomInButton.style.right = '10px';
+          zoomInButton.style.top = '10px';
+          zoomInButton.style.zIndex = '2'; // Adjust the z-index as needed
+          document.body.appendChild(zoomInButton);
+
+          // Add the zoom-out button
+          var zoomOutButton = document.createElement('button');
+          zoomOutButton.id = 'zoom-out-button';
+          zoomOutButton.textContent = '-';
+          zoomOutButton.addEventListener('click', zoomOut);
+          zoomOutButton.style.position = 'absolute';
+          zoomOutButton.style.right = '10px';
+          zoomOutButton.style.top = '50px';
+          zoomOutButton.style.zIndex = '2'; // Adjust the z-index as needed
+          document.body.appendChild(zoomOutButton)
+          });
+
+// Create a marker with the custom icon and add it to the map
+
+//Marker 1
+    var marker = L.marker([14.255105352437454, 121.40515001845127]).addTo(map);
+    marker.bindPopup("Oval");
+
+//Marker 2
+      var marker = L.marker([14.25662, 121.40532]).addTo(map);
+
+      // Create an empty popup
+      var popup = L.popup();
+      
+      //! MARKER
+      var marker = L.marker([14.25662, 121.40532]).addTo(map);
+      var popup = L.popup();
+      
+      // Create an iframe element
+      var iframe = document.createElement('iframe');
+      iframe.src = 'assets/html/pop.html'; // Set the source of the iframe
+      
+      // Set iframe attributes to ensure correct display
+      iframe.style.width = '200px';
+      iframe.style.height = '400px';
+      iframe.frameBorder = 0;
+      
+      // Append the iframe to the popup content
+      popup.setContent(iframe);
+      
+      // Bind the popup to the marker
+      marker.bindPopup(popup);
+      
+      // Bind the popup to the marker
+      marker.bindPopup(popup);
+              
+        //! Oreta Building (Custom Icon)
+        var customIcon = L.icon({
+          iconUrl: 'src/663342.png', //? Icon PATH
+          iconSize: [20, 20], 
+        });
+        
+        var marker = L.marker([14.25559,121.40774], { icon: customIcon }).addTo(map);
+        var popup = L.popup();
+        var iframe = document.createElement('iframe');
+        iframe.src = 'assets/html/pop.html'; //*HTML PATH
+        iframe.style.width = '200px';
+        iframe.style.height = '400px';
+        iframe.frameBorder = 0;
+        popup.setContent(iframe);
+        marker.bindPopup(popup);
+        
+        var marker = L.marker([14.255858, 121.401198]).addTo(map);
+        var popupContent = document.createElement('div');
+        popupContent.innerHTML = 
+        `
+        <h1>Jacko Haws</h1>
+        `;
+        marker.bindPopup(popupContent);
+        
+      //LABEL
+        // Define the coordinates where you want to add the text
+        var textCoordinates = [14.2557, 121.4064];
+
+        // Create a custom divIcon with the HTML element
+        var customIcon = L.divIcon({
+          className: 'text-marker-icon',
+          html: document.getElementById('text-marker'),
+        });
+
+        // Create a marker with the custom icon and add it to the map
+        var textMarker = L.marker(textCoordinates, { icon: customIcon }).addTo(map);
+
+        </script>
+
+<!--FOOTER-->
+<footer>
+  <div id="socials" class="footerContainer"> 
+      <div class="socialIcons"> 
+          <a href="https://www.facebook.com/LagunaUniversityOfficial" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://www.youtube.com/@lagunauniversity9763" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://www.instagram.com/lucscofficial/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://lu.edu.ph/" target="_blank"><i class="fa brands fa-globe"></i></a>
+      </div>
+      <div class="footerNav">
+          <ul>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Address</a></li>
+              <li><a href="#">Email</a></li>
+          </ul> 
+      </div>
+  </div>
+</footer>
+</body>
+</html>

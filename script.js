@@ -322,3 +322,25 @@ office(
     'assets/html/footer.html',
     "<i>Admin Office</i>"
 )
+
+//! ADMIN BUILDING POLYGON
+var polygonCoordinates = [
+    [14.25695,121.40503],
+    [14.25663,121.40516],
+    [14.25607,121.40539],
+    [14.25607,121.40539],
+    [14.25602,121.40546], 
+    [14.25591,121.40573], 
+    [14.25594,121.40585], 
+    [14.25637,121.40567], 
+    [14.25691,121.40542], 
+    [14.25707,121.40534]
+];
+
+var polygon = L.polygon(polygonCoordinates, {
+    color: 'orange',       
+    fillColor: 'black', 
+    fillOpacity: 0.1    
+}).addTo(map);         
+
+polygon.bindPopup("Admin Building");
